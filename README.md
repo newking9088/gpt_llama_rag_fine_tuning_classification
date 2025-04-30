@@ -1,6 +1,6 @@
 # LLM Fine-Tuning, RAG, and Evaluation Framework
 
-A  repository for implementing and evaluating state-of-the-art LLM techniques including fine-tuning, Retrieval-Augmented Generation (RAG), and model evaluation. This project demonstrates practical applications of modern NLP and LLM approaches across various use cases.
+A  repository for implementing and evaluating state-of-the-art LLM techniques including fine-tuning, Retrieval-Augmented Generation (RAG), and model evaluation. This project demonstrates practical applications of modern NLP and LLM approaches across various use cases. Please raed `llm_general_knowledge.md` for short introduction to LLM.
 
 ## Project Overview
 
@@ -17,6 +17,8 @@ This repository contains implementations of advanced LLM techniques focusing on:
 ### Directories
 * `notebooks/`: Jupyter notebooks containing implementations and experiments
 * `data/`: Datasets used in the notebooks
+* `images/`: Contains all required images for short LLM introduction
+  
 
 ## Notebooks
 
