@@ -1,6 +1,6 @@
 <a href="https://www.rksmusings.com/2023/10/29/quick-start-guide-to-large-language-models/" target="_blank">Quick LLM Guide</a>
 
-<img src="nlp_evolution.png" alt="Evolution of NLP models" width="150%" />
+<img src="images/nlp_evolution.png" alt="Evolution of NLP models" width="150%" />
 
 ## Q.1. What are Language Models?
 Language models are artificial intelligence systems that can understand, interpret, and generate human language. The foundation of modern language models is the Transformer architecture, introduced in the seminal paper "Attention is All You Need" (Vaswani et al., 2017). This architecture revolutionized natural language processing by using attention mechanisms rather than recurrent neural networks.
@@ -31,7 +31,7 @@ Models with roughly 100 million parameters or more are typically considered LLMs
 * **BERT variants** (Google)
 * **T5 models** (Google)
 
-  <img src="llms_params.png" alt="LLM Parameters" width="150%" />
+  <img src="images/llms_params.png" alt="LLM Parameters" width="150%" />
 
 ## Performance Characteristics
 * **Autoregressive models** (like GPT): Slower processing but powerful text generation capabilities
@@ -56,9 +56,9 @@ Many LLMs are available as APIs, such as OpenAI's GPT models, which can be acces
 
 Semantic search is a system that understands the meaning and context of a search query and matches it against the meaning and context of available documents for retrieval. Unlike traditional keyword-based search, semantic search can find relevant results without having to rely on exact keyword or n-gram matching, often using a pre-trained large language model (LLM) to understand the nuances of the query and the documents.
 
-<img src="semantic_search.png" alt="Semantic Search Workflow" width="100%" />
+<img src="images/semantic_search.png" alt="Semantic Search Workflow" width="100%" />
 
-<img src="semantic_search_system_pinecone.png" alt="Semantic Search using PineCone and OpenAI Embeddings" width="150%" />
+<img src="images/semantic_search_system_pinecone.png" alt="Semantic Search using PineCone and OpenAI Embeddings" width="150%" />
 
 The core process involves encoding or embedding both search queries and documents into vectors using the same embedding method through language models. The semantic search engine then finds the closest matches by measuring distances between these vectors using metrics like:
 
@@ -107,13 +107,13 @@ Since embedding models have fixed token windows, chunking is used to turn larger
 4. **Sliding Window Chunking**: Creating overlapping chunks to maintain context between adjacent text segments
 5. **Recursive Chunking**: Creating hierarchical representations of documents
 
-<img src="semantic_search_with_ce.png" alt="Evolution of NLP models" width="150%"/>
+<img src="images/semantic_search_with_ce.png" alt="Evolution of NLP models" width="150%"/>
 
 ## Q.3. What are Transformers?
 Transformers are neural network architectures introduced in the paper <a href="https://arxiv.org/abs/1706.03762" target="_blank">Attention is All You Need (2017)</a>
 that revolutionized natural language processing.
 
-<img src="transformer.png" alt="Semantic Search Workflow" width="100%" />
+<img src="images/transformer.png" alt="Semantic Search Workflow" width="100%" />
 
 ## Three Main Components
 1. **Word Embedding** - Vector representation of tokens (words)
@@ -187,7 +187,7 @@ The three main parameters you can tune in OpenAI's GPT playground are:
    - **Value of 1.0**: Considers all possible next tokens (no filtering)
   
 
-<img src="gpt4o_prompts.png" alt="GPT-4o prompts" width="100%" />
+<img src="images/gpt4o_prompts.png" alt="GPT-4o prompts" width="100%" />
 
 ## Few-Shot Learning/In-Context Learning
 
@@ -219,7 +219,7 @@ A RAG system typically consists of three main components:
 2. **Retriever**: Fetches the most relevant information from the database based on the user's query
 3. **Generator**: An LLM (like GPT-4) that uses both the user's query and the retrieved information to create a coherent, informed response
 
-<img src="rag.png" alt="RAG Architecture" width="100%" />
+<img src="images/rag.png" alt="RAG Architecture" width="100%" />
 
 ## RAG Prompt Template
 
@@ -290,7 +290,7 @@ AI agents follow a "thought, action, observation, and response" pattern, where t
 
 Agents are systems where LLMs dynamically direct their own processes and tool usage, maintaining control over how they accomplish tasks. They're best suited for open-ended problems where it's difficult to predict the required number of steps and where you can't hardcode a fixed path.
 
-<img src="ai_agents_workflow.png" alt="AI Agents and Workflows" width="100%" />
+<img src="images/ai_agents_workflow.png" alt="AI Agents and Workflows" width="100%" />
 
 ## Workflows
 
@@ -330,7 +330,7 @@ Large Language Model (LLM) fine-tuning represents a specialized form of transfer
 
 [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685)
 
-<img src="llm_dimensions.png" alt="LLM Dimensions" width="100%" />
+<img src="images/llm_dimensions.png" alt="LLM Dimensions" width="100%" />
 
 ## Types of LLM Fine-Tuning
 
@@ -816,7 +816,7 @@ The JSON will be like a completion from assistant.
 HuggingFace research reveals positional bias: when randomly assigning outputs to Assistant 1 or 2, GPT-4 was more likely to just pick Assistant 1.
 [**Can foundation models label data like humans?**](https://huggingface.co/blog/open-llm-leaderboard-rlhf)
 
-<img src="positional_bias.png" alt="Positional Bias in LLM" width="100%" />
+<img src="images/positional_bias.png" alt="Positional Bias in LLM" width="100%" />
 
 ## Q.11. What is Fine-Tuning and Why Is It Needed?
 
