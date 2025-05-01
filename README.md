@@ -1,6 +1,6 @@
 # LLM Fine-Tuning, RAG, and Evaluation Framework
 
-A  repository for implementing and evaluating state-of-the-art LLM techniques including fine-tuning, Retrieval-Augmented Generation (RAG), and model evaluation. This project demonstrates practical applications of modern NLP and LLM approaches across various use cases. Please raed `llm_general_knowledge.md` for short introduction to LLM.
+A  repository for implementing and evaluating state-of-the-art LLM techniques, including fine-tuning, Retrieval-Augmented Generation (RAG), and model evaluation. This project demonstrates practical applications of modern NLP and LLM approaches across various use cases. Please read `llm_general_knowledge.md` for a short introduction to LLM.
 
 ## Project Overview
 
