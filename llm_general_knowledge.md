@@ -1,4 +1,4 @@
-<a href="https://www.rksmusings.com/2023/10/29/quick-start-guide-to-large-language-models/" target="_blank">Quick LLM Guide</a>
+Reference: <a href="https://www.rksmusings.com/2023/10/29/quick-start-guide-to-large-language-models/" target="_blank">Quick LLM Guide</a>
 
 <img src="images/nlp_evolution.png" alt="Evolution of NLP models" width="150%" />
 
