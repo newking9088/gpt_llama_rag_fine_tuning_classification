@@ -178,7 +178,7 @@ The three main parameters you can tune in OpenAI's GPT playground are:
 2. **Maximum Token Length** (1-4096+): Limits response size
    - Controls how many tokens (roughly 4 characters or ¾ of a word) the model will generate
    - Higher values allow for longer responses but consume more resources
-   - Models have different maximum context limits (e.g., GPT-4 supports 8K-32K tokens)
+   - Models have different maximum context limits (e.g., standard GPT-4o supports 4096 output tokens)
 
 3. **Top-p** (0-1): Controls token diversity via nucleus sampling
    - Only considers tokens whose cumulative probability exceeds the specified value
@@ -191,9 +191,9 @@ The three main parameters you can tune in OpenAI's GPT playground are:
 
 ## Few-Shot Learning/In-Context Learning
 
-Another interesting way to prompt our LLM is few-shot learning/In-context learning. In this we give an LLM an example of task being solved to teach the LLM how to reason through a problem and also to format the answer in desired format.
+Another interesting way to prompt our LLM is few-shot learning/In-context learning. In this we give an LLM an example of the task being solved to teach the LLM how to reason through a problem and also to format the answer in the desired format.
 
-GPT-3 papers' title called out few-shot learning as a primary source of in-context learning - on the job training for an LLM. 
+GPT-3 papers' title called out few-shot learning as a primary source of in-context learning, on the job training for an LLM. 
 
 Reference: <a href="https://arxiv.org/abs/2005.14165" target="_blank">Language Models are Few Shot Learners</a>
 
