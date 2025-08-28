@@ -355,8 +355,8 @@ Assistant Response: I don't have sufficient information to answer how old Obama 
 
 When evaluating a RAG retriever, metrics like precision and recall are commonly used:
 
-- **Precision** = # of relevant documents / # of documents retrieved
-- **Recall** = # of relevant documents retrieved / # of all relevant documents
+- **Precision** = # of relevant documents retrieved / # of documents retrieved
+- **Recall** = # of relevant documents retrieved / # of all relevant documents retrieved
 
 The choice between precision and recall depends on your task:
 - If multiple relevant documents exist, precision might be a better metric
