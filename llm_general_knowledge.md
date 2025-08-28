@@ -60,20 +60,86 @@ Semantic search is a system that understands the meaning and context of a search
 
 <img src="images/semantic_search_system_pinecone.png" alt="Semantic Search using PineCone and OpenAI Embeddings" width="150%" />
 
-The core process involves encoding or embedding both search queries and documents into vectors using the same embedding method through language models. The semantic search engine then finds the closest matches by measuring distances between these vectors using metrics like:
+  # Vector Similarity in Semantic Search
 
-- Euclidean distance
-- Cosine similarity
-- Dot product
+The core process of **semantic search** involves encoding both search queries and documents into high-dimensional vectors (embeddings) using the same embedding model (e.g., a transformer-based language model).  The search engine then measures the similarity between these vectors to find the closest matches.
 
-The embedded documents are typically stored in specialized vector databases, including:
+Common similarity metrics include:
 
-- FAISS (Facebook AI Similarity Search)
-- ChromaDB
-- Pinecone
-- Weaviate
-- Milvus
-- Qdrant
+- **Cosine similarity**  
+- **Dot product**
+- **Euclidean distance** 
+
+---
+
+## Why Euclidean Distance is Not Ideal for Semantic Search
+
+While Euclidean distance measures the straight-line distance between two points, it does not account for **vector direction** — only magnitude.  This creates problems in **high-dimensional embedding spaces**, where:
+
+- Vectors with similar meaning (semantics) may have very different magnitudes.  
+- Large vector norms can dominate the Euclidean distance, even if the vectors point in nearly the same direction.  
+- In high dimensions, Euclidean distances tend to concentrate (become very similar), making it harder to discriminate between relevant and irrelevant results.
+
+As a result, **Euclidean distance is less effective for semantic similarity**.
+
+---
+
+## Preferred Metrics for Semantic Search
+
+- **Cosine Similarity**  
+  - Measures the angle between vectors (direction), ignoring magnitude.  
+  - Best when embeddings are normalized.  
+  - Captures semantic closeness effectively.  
+
+- **Dot Product**  
+  - Similar to cosine similarity (if vectors are normalized).  
+  - Useful in large-scale systems (e.g., with ANN search libraries).  
+  - Often faster and easier to implement in production.
+
+---
+
+# Index vs. Vector Database
+
+Indexes are excellent for **proof-of-concept (POC)** projects — but they lack long-term scalability.  
+A standalone index (like **FAISS**) is stored locally and must be rebuilt with each restart, lacking persistence, metadata handling, and real-time updates.  
+
+In contrast, a **vector database** (such as **Pinecone**) offers production-grade capabilities:
+
+- **Persistent storage** with CRUD operations and real-time updates  
+- **Metadata filtering** and support for dense, sparse, and hybrid searches  
+- **Scalability** via serverless or pod-based indexing  
+- **Built-in backup** via *collections* for resilience and flexibility  
+- **Security, monitoring, and ecosystem integration**, ready for production  
+- **Indexes as standalone services**, scalable across multiple pods  
+
+For example, Pinecone allows creating **dense or sparse indexes**, using **namespaces** for multi-tenancy, and supports filtering by metadata to refine queries — enabling powerful, scalable, and production-grade similarity search.  
+
+---
+
+## Key Vector Databases
+
+- [ChromaDB](https://www.trychroma.com/)  
+- [Pinecone](https://www.pinecone.io/)  
+- [Weaviate](https://weaviate.io/)  
+- [Milvus](https://milvus.io/)  
+- [Qdrant](https://qdrant.tech/)  
+
+---
+
+## Side-by-Side Comparison
+
+| Feature                     | Standalone Index (e.g., FAISS) | Vector Database (e.g., Pinecone) |
+|-----------------------------|--------------------------------|----------------------------------|
+| **Persistence**             | Local, must be rebuilt         | Persistent, real-time CRUD       |
+| **Scalability**             | Limited to single machine      | Horizontally scalable            |
+| **Metadata Filtering**      | ❌ Not supported               | ✅ Supported                      |
+| **Hybrid Search**           | ❌ Not supported               | ✅ Dense + Sparse (hybrid)        |
+| **Backups**                 | ❌ None                        | ✅ Collections / Replication      |
+| **Production Readiness**    | Prototype only                 | Enterprise-grade                 |
+| **Security & Monitoring**   | ❌ None                        | ✅ Built-in                       |
+
+---
+
 
 ## Types of Semantic Search
 
@@ -85,7 +151,7 @@ There are two primary types of semantic search:
 
 ## Vector Embeddings (Dense Representations)
 
-Vector embeddings are also called dense representations. They provide a way to represent words or phrases as machine-readable numerical vectors in a multi-dimensional space, typically based on their contextual meaning. The principle is that similar phrases (in terms of semantic meaning) will have vectors that are close together by some measure (like Euclidean distance) and vice-versa.
+Vector embeddings are also called dense representations. They provide a way to represent words or phrases as machine-readable numerical vectors in a multi-dimensional space, typically based on their contextual meaning. The principle is that similar phrases (in terms of semantic meaning) will have vectors that are close together by some measure (like Cosine similarity) and vice-versa.
 
 Off-the-shelf closed-source embedding models like OpenAI's text-embedding-ada-002 from the GPT-3 family have a fixed context window (input size) and embedding (output) size. These constraints must be worked around in practical applications.
 
@@ -97,15 +163,55 @@ Two subsets of language models are commonly used for encoding:
 
 2. **Bi-Encoder**: Creates batches of text embeddings to be stored and used in information retrieval tasks like search. Bi-encoders process query and document independently, making them more efficient for large-scale retrieval.
 
-## Chunking Strategies
+# Chunking Strategies in Semantic Search
 
-Since embedding models have fixed token windows, chunking is used to turn larger documents into smaller pieces:
+Embedding models have fixed token limits, so large documents must be split into smaller **chunks**.  
+Choosing the right chunking strategy is critical — it impacts retrieval accuracy, context preservation, and response quality.
 
-1. **Natural Breaks Chunking**: Dividing text at natural boundaries like page breaks, paragraphs, or sections
-2. **Fixed-Size Chunking**: Breaking text into chunks of consistent token lengths
-3. **Semantic Chunking**: Creating chunks based on topic coherence using clustering algorithms
-4. **Sliding Window Chunking**: Creating overlapping chunks to maintain context between adjacent text segments
-5. **Recursive Chunking**: Creating hierarchical representations of documents
+---
+
+## Common Chunking Strategies
+
+1. **Natural Breaks Chunking**  
+   - **How**: Split at logical boundaries (e.g., headings, sections, paragraphs, page breaks).  
+   - **When to use**: Best for structured documents (reports, manuals, research papers) where natural divisions preserve meaning.  
+   - ✅ Preserves human-readable structure  
+   - ❌ May create chunks that are too large or too small
+
+2. **Fixed-Size Chunking**  
+   - **How**: Divide into consistent token or character lengths (e.g., 500 tokens per chunk).  
+   - **When to use**: Best when document structure is inconsistent or not meaningful.  
+   - ✅ Ensures predictable size for embeddings  
+   - ❌ Risk of splitting related ideas across chunks
+
+3. **Semantic Chunking**  
+   - **How**: Use topic modeling or clustering to group sentences/paragraphs by semantic similarity.  
+   - **When to use**: Best for knowledge bases or mixed-topic documents.  
+   - ✅ Keeps conceptually related information together  
+   - ❌ More computationally expensive to preprocess
+
+4. **Sliding Window Chunking**  
+   - **How**: Create overlapping chunks (e.g., 200 tokens with 50-token overlap).  
+   - **When to use**: Best when **related information spans across paragraphs or pages**.  
+   - ✅ Maintains continuity across chunk boundaries  
+   - ❌ Increases storage and index size
+
+5. **Recursive Chunking**  
+   - **How**: Start with large sections, then break into progressively smaller sub-chunks if needed.  
+   - **When to use**: Best for hierarchical or multi-level documents (e.g., legal contracts, textbooks).  
+   - ✅ Allows multi-granularity retrieval (section → paragraph → sentence)  
+   - ❌ More complex to implement
+
+---
+
+## Handling Related Information Across Pages/Paragraphs
+
+- Use **sliding windows** to create overlapping chunks so cross-paragraph/page context is preserved.  
+- Combine with **metadata tagging** (e.g., page number, section ID) to help the retriever reassemble context.  
+- For documents with recurring cross-references (e.g., contracts, manuals), consider **semantic chunking + recursive chunking** to group related references.  
+- In production RAG systems, a hybrid approach (e.g., *natural breaks + sliding window overlap*) often yields the best balance of **coherence** and **retrieval accuracy**.
+
+---
 
 <img src="images/semantic_search_with_ce.png" alt="Evolution of NLP models" width="150%"/>
 
